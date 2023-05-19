@@ -1,10 +1,11 @@
 <script>
 	import { isLoggedIn } from '../../hooks/auth';
 	import { navigateTo } from '../../utils/navigation';
+	import { Dashboard } from '../../components/dashboard';
 
 	$: if (!$isLoggedIn) {
 		navigateTo('login');
 	}
 </script>
 
-<span>this is dashboard page</span>
+<Dashboard />
