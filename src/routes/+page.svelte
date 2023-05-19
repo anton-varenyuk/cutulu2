@@ -4,8 +4,6 @@
 
 	$: if ($isLoggedIn) {
 		navigateTo('dashboard');
-	} else {
-		navigateTo('login');
 	}
 </script>
 
