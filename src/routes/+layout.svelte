@@ -3,7 +3,9 @@
 	import { isLoggedIn } from '../hooks/auth';
 	import { navigateTo } from '../utils/navigation';
 
-	$: if (!$isLoggedIn) {
+	$: if ($isLoggedIn) {
+		navigateTo('dashboard');
+	} else {
 		navigateTo('login');
 	}
 </script>
