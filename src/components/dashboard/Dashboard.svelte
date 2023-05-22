@@ -1,10 +1,10 @@
 <script>
-	import { EXAMPLES } from '../../utils/fixtures';
+	import { Examples } from '../../utils/fixtures';
 	import { DashboardItem } from './dasboard-item';
 	import { dashboard } from './style';
 	import { navigateTo } from '../../utils/navigation';
 
-	const Examples = Object.values(EXAMPLES);
+	const ExampleValues = Object.values(Examples);
 
 	const handleRedirect = (id) => {
 		navigateTo(`examples/${id}`);
@@ -12,7 +12,7 @@
 </script>
 
 <div class={dashboard}>
-	{#each Examples as example}
+	{#each ExampleValues as example}
 		<DashboardItem {example} onClick={handleRedirect} />
 	{/each}
 </div>
