@@ -13,3 +13,7 @@ export const item = css`
 	justify-content: space-around;
 	cursor: pointer;
 `;
+
+export const title = css`
+	text-align: center;
+`;

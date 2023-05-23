@@ -3,13 +3,12 @@
 export interface IExample {
 	id: number;
 	name: string;
-	codePreview: string;
 	icon: string;
 	description: string;
 }
 
 export interface ICanvasRenderCollection {
-	[key: string]: (ctx: CanvasRenderingContext2D) => void;
+	[key: string]: (ctx: CanvasRenderingContext2D) => Record<unknown, unknown>;
 }
 
 export type ExamplesCollection = { [key: string]: IExample };
@@ -19,40 +18,48 @@ export interface IExampleLibrary {
 	[key: string]: IExample;
 }
 
-const textMock =
-	"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. ";
-
 export const Examples = {
-	test: {
-		id: 'test',
-		name: 'test example',
-		codePreview: `test test test test test`,
-		icon: 'material-symbols:source-notes-outline-rounded',
-		description: textMock
-	},
-	test2: {
-		id: 'test2',
-		name: 'new example',
-		codePreview: `test test test test test`,
-		icon: 'material-symbols:kitesurfing',
-		description: textMock
+	singleton: {
+		id: 'singleton',
+		name: 'Singleton',
+		icon: 'icon-park-outline:one',
+		description: 'this is singleton example demo'
 	}
 };
 
 // RENDER FUNCTIONS
-const test = (ctx: CanvasRenderingContext2D): void => {
-	ctx.fillRect(25, 25, 100, 150);
-	ctx.clearRect(45, 45, 60, 60);
-	ctx.strokeRect(50, 50, 50, 50);
-};
+const singleton = (ctx: CanvasRenderingContext2D): Record<unknown, unknown> => {
+	// Pattern logic
+	class Singleton {
+		private static instance: Singleton;
+		public message: string;
 
-const test2 = (ctx: CanvasRenderingContext2D): void => {
-	ctx.fillRect(25, 25, 80, 80);
-	ctx.clearRect(45, 45, 60, 60);
-	ctx.strokeRect(50, 50, 50, 50);
+		private constructor() {
+			this.message = 'Hello. I am singleton';
+		}
+
+		public static getInstance(): Singleton {
+			if (!Singleton.instance) {
+				Singleton.instance = new Singleton();
+			}
+			return Singleton.instance;
+		}
+	}
+
+	// Visualisation logic
+	const instance1 = Singleton.getInstance();
+	const instance2 = Singleton.getInstance();
+
+	if (instance1 === instance2) {
+		ctx.font = '18px serif';
+		ctx.fillStyle = '#fefefe';
+		ctx.fillText(instance1.message, 10, 50);
+		ctx.fillText('and both my variables contain the same instance!', 10, 70);
+	}
+
+	return Singleton;
 };
 
 export const canvasRenderCollection: ICanvasRenderCollection = {
-	test,
-	test2
+	singleton
 };
