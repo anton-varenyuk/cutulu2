@@ -5,7 +5,7 @@ interface ICanvasRenderProps {
 	renderFunctionId: string;
 }
 
-export const canvasRender = (props: ICanvasRenderProps) => {
+export const canvasRender = (props: ICanvasRenderProps): Record<unknown, unknown> | undefined => {
 	const { ctx, renderFunctionId } = props;
 
 	if (ctx && canvasRenderCollection[renderFunctionId]) {

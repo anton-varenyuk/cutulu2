@@ -11,4 +11,13 @@
 </script>
 
 <Header />
-<slot />
+
+<div class="wrapper">
+	<slot />
+</div>
+
+<style>
+	.wrapper {
+		padding: 20px;
+	}
+</style>
