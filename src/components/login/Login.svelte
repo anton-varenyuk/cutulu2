@@ -1,30 +1,16 @@
 <script lang="ts">
 	import { signIn } from '../../hooks/auth';
+	import { TextInput } from '../text-input';
+	import { Button } from '../button/';
+	import { form } from './style';
 
-	const handleLogin = (e: FormDataEvent) => {
-		const form = e.target as HTMLFormElement;
-		const formData = new FormData(form);
-		let userData = {};
+	let userData = { name: '', password: '' };
 
-		for (const entry of formData.entries()) {
-			Object.assign(userData, { [entry[0]]: entry[1] });
-		}
-
-		if (Object.keys(userData).length) {
-			signIn(userData);
-		}
-	};
+	$: disabled = !userData.name || !userData.password;
 </script>
 
-<form on:submit|preventDefault={handleLogin}>
-	<input type="text" autocomplete="username" name="name" id="name" placeholder="username" />
-	<input
-		type="password"
-		name="password"
-		autocomplete="current-password"
-		id="password"
-		placeholder="password"
-	/>
-
-	<button type="submit">Submit</button>
+<form class={form} on:submit|preventDefault={() => signIn(userData)}>
+	<TextInput bind:value={userData.name} label="Username" />
+	<TextInput bind:value={userData.password} label="Password" />
+	<Button {disabled} type="submit">Submit</Button>
 </form>

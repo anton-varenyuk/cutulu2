@@ -5,7 +5,13 @@ export const input = css`
 	font-size: ${FONTSIZE.regular};
 	padding: ${spacing()} ${spacing(2)};
 	color: #27393d;
-	border-width: ${BORDER.width};
-	border-color: transparent;
+	border: ${BORDER.width} solid #aaaaaa;
 	background: ${PALETTE.semitransparent};
+`;
+
+export const wrapper = css`
+	width: 300px;
+	display: flex;
+	flex-direction: column;
+	gap: ${spacing(2)};
 `;

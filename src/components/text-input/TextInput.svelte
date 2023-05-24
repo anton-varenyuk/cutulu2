@@ -1,18 +1,15 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
-	import { Update } from '../../types';
-	import { input } from './style';
-
-	// const dispatch = createEventDispatcher();
+	import { input, wrapper } from './style';
 	export let value: string;
-	export let fullWidth = false;
-	export let onChange: (e) => void;
-
-	// on:change={onChange}
-	// on:input={(e) => dispatch(Update.CHANGE, { value: e.target.value })}
+	export let label: string;
 </script>
 
-<input class:wide={fullWidth} class={input} {value} on:input={onChange} />
+<div class={wrapper}>
+	{#if label}
+		<span>{label}</span>
+	{/if}
+	<input class={input} bind:value />
+</div>
 
 <style>
 	.wide {
