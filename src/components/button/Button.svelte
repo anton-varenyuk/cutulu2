@@ -1,6 +1,9 @@
 <script lang="ts">
-	export let onClick;
-	export let type: 'submit';
+	import { btn } from './style';
+
+	export let onClick = undefined;
+	export let type: string;
+	export let disabled: boolean;
 </script>
 
-<button {type} on:click={onClick}><slot /></button>
+<button {disabled} class={btn} {type} on:click={onClick}><slot /></button>

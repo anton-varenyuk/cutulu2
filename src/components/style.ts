@@ -2,6 +2,7 @@ import { css } from '@emotion/css';
 
 export const PALETTE = {
 	text: '#266370',
+	pale: '#7dabb3',
 	semitransparent: '#ffffff20'
 };
 export const FONTSIZE = {

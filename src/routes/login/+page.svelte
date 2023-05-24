@@ -8,4 +8,14 @@
 	}
 </script>
 
-<Login />
+<div class="wrapper">
+	<Login />
+</div>
+
+<style>
+	.wrapper {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+</style>
