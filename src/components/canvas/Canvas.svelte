@@ -7,7 +7,7 @@
 
 	let canvas: HTMLCanvasElement | null = null;
 	let ctx: CanvasRenderingContext2D | null = null;
-	let implementation: Record<unknown, unknown>;
+	let implementation: string;
 
 	onMount(() => {
 		ctx = canvas.getContext('2d');
