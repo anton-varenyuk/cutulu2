@@ -1,6 +1,7 @@
 // TODO: move types somewhere
 
 import { client, Creator, Dude1, Dude2, DudeCreator1, DudeCreator2 } from './patterns/factory';
+import { client as abstract, CatFactory, DogFactory, Cat } from './patterns/abstract-factory';
 import { Singleton } from './patterns/singleton';
 
 export interface IExample {
@@ -26,13 +27,22 @@ export const Examples = {
 		id: 'singleton',
 		name: 'Singleton',
 		icon: 'icon-park-outline:one',
-		description: 'this is singleton example demo'
+		description:
+			'Singleton is a creational design pattern that lets you ensure that a class has only one instance, while providing a global access point to this instance.'
 	},
 	factory: {
 		id: 'factory',
 		name: 'Factory',
 		icon: 'material-symbols:factory-outline',
-		description: 'this is factory example demo'
+		description:
+			'Factory Method is a creational design pattern that provides an interface for creating objects in a superclass, but allows subclasses to alter the type of objects that will be created.'
+	},
+	abstractFactory: {
+		id: 'abstractFactory',
+		name: 'Abstract Factory',
+		icon: 'material-symbols:draw-abstract-outline',
+		description:
+			'Abstract Factory is a creational design pattern, which solves the problem of creating entire product families without specifying their concrete classes.'
 	}
 };
 
@@ -70,7 +80,27 @@ const factory = (ctx: CanvasRenderingContext2D) => {
 	`;
 };
 
+const abstractFactory = (ctx: CanvasRenderingContext2D) => {
+	const cats = abstract(new CatFactory());
+	const dogs = abstract(new DogFactory());
+
+	ctx.font = '24px serif';
+	ctx.fillStyle = '#fefefe';
+	ctx.fillText(cats.product.say(), 10, 50);
+	ctx.fillText(dogs.product.say(), 10, 90);
+
+	ctx.fillText(`kitten has size ${cats.subProduct.size}`, 10, 150);
+	ctx.fillText(`puppy has size ${dogs.subProduct.size}`, 10, 190);
+
+	return `
+		${CatFactory} 
+		${Cat}
+		${abstract}
+	`;
+};
+
 export const canvasRenderCollection: ICanvasRenderCollection = {
 	singleton,
-	factory
+	factory,
+	abstractFactory
 };
