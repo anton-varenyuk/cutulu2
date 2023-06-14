@@ -3,6 +3,13 @@
 import { client, Creator, Dude1, Dude2, DudeCreator1, DudeCreator2 } from './patterns/factory';
 import { client as abstract, CatFactory, DogFactory, Cat } from './patterns/abstract-factory';
 import { Singleton } from './patterns/singleton';
+import {
+	client as builderClient,
+	Director,
+	AbominationBuilder,
+	abom1,
+	abom2
+} from './patterns/builder';
 
 export interface IExample {
 	id: number;
@@ -43,6 +50,13 @@ export const Examples = {
 		icon: 'material-symbols:draw-abstract-outline',
 		description:
 			'Abstract Factory is a creational design pattern, which solves the problem of creating entire product families without specifying their concrete classes.'
+	},
+	builder: {
+		id: 'builder',
+		name: 'Builder',
+		icon: 'fluent-mdl2:build-definition',
+		description:
+			'Builder is a creational design pattern, which allows constructing complex objects step by step'
 	}
 };
 
@@ -99,8 +113,35 @@ const abstractFactory = (ctx: CanvasRenderingContext2D) => {
 	`;
 };
 
+const builder = (ctx: CanvasRenderingContext2D) => {
+	ctx.font = '24px serif';
+	ctx.fillStyle = '#fefefe';
+
+	// first abomination
+	const director = new Director(abom1);
+	const client = builderClient(director);
+
+	client.parts.forEach((part, i) => {
+		ctx.fillText(`${part.number} ${part.type}`, 10, i * 50 + 50);
+	});
+
+	// second abomination
+	const director2 = new Director(abom2);
+	const client2 = builderClient(director2);
+
+	client2.parts.forEach((part, i) => {
+		ctx.fillText(`${part.number} ${part.type}`, 150, i * 50 + 50);
+	});
+
+	return `
+		${AbominationBuilder}
+		${Director}
+	`;
+};
+
 export const canvasRenderCollection: ICanvasRenderCollection = {
 	singleton,
 	factory,
-	abstractFactory
+	abstractFactory,
+	builder
 };
