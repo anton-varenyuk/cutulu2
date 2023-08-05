@@ -10,6 +10,15 @@ import {
 	abom1,
 	abom2
 } from './patterns/builder';
+import {
+	dev,
+	juniorDev,
+	juniorSeniorDev,
+	juniorSeniorFullstackDev,
+	client as decoratorClient,
+	Decorator,
+	DeveloperComponent
+} from './patterns/decorator';
 
 export interface IExample {
 	id: number;
@@ -57,6 +66,13 @@ export const Examples = {
 		icon: 'fluent-mdl2:build-definition',
 		description:
 			'Builder is a creational design pattern, which allows constructing complex objects step by step'
+	},
+	decorator: {
+		id: 'decorator',
+		name: 'Decorator',
+		icon: 'material-symbols:layers-outline-rounded',
+		description:
+			'Decorator is a structural design pattern that lets you attach new behaviors to objects by placing these objects inside special wrapper objects that contain the behaviors.'
 	}
 };
 
@@ -139,9 +155,31 @@ const builder = (ctx: CanvasRenderingContext2D) => {
 	`;
 };
 
+const decorator = (ctx: CanvasRenderingContext2D) => {
+	ctx.font = '24px serif';
+	ctx.fillStyle = '#fefefe';
+
+	// each wrapper envelops previous one
+	const simpleDev = decoratorClient(dev);
+	const junior = decoratorClient(juniorDev);
+	const juniorSenior = decoratorClient(juniorSeniorDev);
+	const fullstack = decoratorClient(juniorSeniorFullstackDev);
+
+	ctx.fillText(`Kolia says: ${simpleDev}`, 20, 150);
+	ctx.fillText(`Vasya says: ${junior}`, 20, 200);
+	ctx.fillText(`Petya says: ${juniorSenior}`, 20, 250);
+	ctx.fillText(`Vova says: ${fullstack}`, 20, 300);
+
+	return `
+		${DeveloperComponent}
+		${Decorator}
+	`;
+};
+
 export const canvasRenderCollection: ICanvasRenderCollection = {
 	singleton,
 	factory,
 	abstractFactory,
-	builder
+	builder,
+	decorator
 };
