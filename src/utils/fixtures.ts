@@ -219,6 +219,8 @@ const mediator = (ctx: CanvasRenderingContext2D) => {
 		ctx.font = '24px serif';
 		ctx.fillStyle = '#fefefe';
 
+		ctx.fillText('Click on buttons to make it work', 50, 300);
+
 		ctx.fillRect(20, 20, 150, 100);
 		ctx.fillRect(300, 20, 150, 100);
 
