@@ -17,7 +17,8 @@
 
 <div class={exampleWrapper}>
 	<div>
-		<canvas class={canv} width="600" height="600" bind:this={canvas}>Not working</canvas>
+		<canvas class={canv} width="600" height="600" id="canvas" bind:this={canvas}>Not working</canvas
+		>
 	</div>
 
 	<div>
