@@ -20,6 +20,7 @@ import {
 	DeveloperComponent
 } from './patterns/decorator';
 import { DateFacade, DayOfMonth, MonthCalculator, DaysCalculator } from './patterns/facade';
+import { Button, Mediator } from './patterns/mediator';
 
 export interface IExample {
 	id: number;
@@ -81,6 +82,13 @@ export const Examples = {
 		icon: 'material-symbols:garage-home-outline',
 		description:
 			'Facade is a structural design pattern that provides a simplified (but limited) interface to a complex system of classes, library or framework.'
+	},
+	mediator: {
+		id: 'mediator',
+		name: 'Mediator',
+		icon: 'material-symbols:interactive-space-outline-sharp',
+		description:
+			'Mediator is a behavioral design pattern that reduces coupling between components of a program by making them communicate indirectly, through a special mediator object.'
 	}
 };
 
@@ -201,11 +209,68 @@ const facade = (ctx: CanvasRenderingContext2D) => {
 	`;
 };
 
+const mediator = (ctx: CanvasRenderingContext2D) => {
+	const button1 = new Button(0);
+	const button2 = new Button(0);
+	const mediator = new Mediator(button1, button2);
+
+	const drawButtons = () => {
+		ctx.clearRect(0, 0, 600, 600);
+		ctx.font = '24px serif';
+		ctx.fillStyle = '#fefefe';
+
+		ctx.fillRect(20, 20, 150, 100);
+		ctx.fillRect(300, 20, 150, 100);
+
+		ctx.fillStyle = '#171717';
+		ctx.fillText(`btn1: ${button1.value}`, 30, 70);
+		ctx.fillText(`btn2: ${button2.value}`, 310, 70);
+	};
+
+	drawButtons();
+
+	const canvas = document.getElementById('canvas');
+	canvas.addEventListener('click', (e) => {
+		const target = e.target as Element;
+		const canvasRect = target.getBoundingClientRect();
+
+		const clickCanvasX = e.pageX - canvasRect.left;
+		const clickCanvasY = e.pageY - canvasRect.top;
+
+		// Button 1 click
+		if (
+			clickCanvasX >= 20 &&
+			clickCanvasX <= 20 + 150 &&
+			clickCanvasY >= 20 &&
+			clickCanvasY <= 20 + 100
+		) {
+			button1.onChange();
+		}
+		// Button 2 click
+		if (
+			clickCanvasX >= 300 &&
+			clickCanvasX <= 300 + 150 &&
+			clickCanvasY >= 20 &&
+			clickCanvasY <= 20 + 100
+		) {
+			button2.onChange();
+		}
+
+		drawButtons();
+	});
+
+	return `
+		${Mediator}
+		${Button}
+	`;
+};
+
 export const canvasRenderCollection: ICanvasRenderCollection = {
 	singleton,
 	factory,
 	abstractFactory,
 	builder,
 	decorator,
-	facade
+	facade,
+	mediator
 };
