@@ -145,16 +145,18 @@ const builder = (ctx: CanvasRenderingContext2D) => {
 	const director = new Director(abom1);
 	const client = builderClient(director);
 
+	ctx.fillText(`Abomination 1 has: `, 10, 50);
 	client.parts.forEach((part, i) => {
-		ctx.fillText(`${part.number} ${part.type}`, 10, i * 50 + 50);
+		ctx.fillText(`${part.number} ${part.type}`, 10, i * 50 + 100);
 	});
 
 	// second abomination
 	const director2 = new Director(abom2);
 	const client2 = builderClient(director2);
 
+	ctx.fillText(`Abomination 2 has: `, 350, 50);
 	client2.parts.forEach((part, i) => {
-		ctx.fillText(`${part.number} ${part.type}`, 150, i * 50 + 50);
+		ctx.fillText(`${part.number} ${part.type}`, 350, i * 50 + 100);
 	});
 
 	return `
