@@ -19,6 +19,7 @@ import {
 	Decorator,
 	DeveloperComponent
 } from './patterns/decorator';
+import { DateFacade, DayOfMonth, MonthCalculator, DaysCalculator } from './patterns/facade';
 
 export interface IExample {
 	id: number;
@@ -73,6 +74,13 @@ export const Examples = {
 		icon: 'material-symbols:layers-outline-rounded',
 		description:
 			'Decorator is a structural design pattern that lets you attach new behaviors to objects by placing these objects inside special wrapper objects that contain the behaviors.'
+	},
+	facade: {
+		id: 'facade',
+		name: 'Facade',
+		icon: 'material-symbols:garage-home-outline',
+		description:
+			'Facade is a structural design pattern that provides a simplified (but limited) interface to a complex system of classes, library or framework.'
 	}
 };
 
@@ -176,10 +184,26 @@ const decorator = (ctx: CanvasRenderingContext2D) => {
 	`;
 };
 
+const facade = (ctx: CanvasRenderingContext2D) => {
+	ctx.font = '24px serif';
+	ctx.fillStyle = '#fefefe';
+
+	const today = new DateFacade().todayIs();
+	ctx.fillText(`${today}`, 20, 150);
+
+	return `
+		${DateFacade}
+		${DaysCalculator}
+		${MonthCalculator}
+		${DayOfMonth}
+	`;
+};
+
 export const canvasRenderCollection: ICanvasRenderCollection = {
 	singleton,
 	factory,
 	abstractFactory,
 	builder,
-	decorator
+	decorator,
+	facade
 };
