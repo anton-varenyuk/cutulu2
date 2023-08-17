@@ -21,6 +21,7 @@ import {
 } from './patterns/decorator';
 import { DateFacade, DayOfMonth, MonthCalculator, DaysCalculator } from './patterns/facade';
 import { Button, Mediator } from './patterns/mediator';
+import { Publisher, Subscriber } from './patterns/observable';
 
 export interface IExample {
 	id: number;
@@ -89,6 +90,13 @@ export const Examples = {
 		icon: 'material-symbols:interactive-space-outline-sharp',
 		description:
 			'Mediator is a behavioral design pattern that reduces coupling between components of a program by making them communicate indirectly, through a special mediator object.'
+	},
+	observable: {
+		id: 'observable',
+		name: 'Observable',
+		icon: 'ph:binoculars',
+		description:
+			'Observer is a behavioral design pattern that allows some objects to notify other objects about changes in their state.'
 	}
 };
 
@@ -267,6 +275,42 @@ const mediator = (ctx: CanvasRenderingContext2D) => {
 	`;
 };
 
+
+const observable = (ctx: CanvasRenderingContext2D) => {
+	const publisher = new Publisher();
+	const subscriber = new Subscriber();
+	const subscriber2 = new Subscriber();
+
+	subscriber.subscribe(publisher);
+	subscriber2.subscribe(publisher);
+	publisher.init();
+
+	const draw = () => {
+		ctx.clearRect(0, 0, 600, 600);
+		ctx.font = '24px serif';
+
+		ctx.fillStyle = '#4aaff7';
+		ctx.fillText('Observable', 150, 300);
+		ctx.fillText(`${publisher.state.timer}`, 150, 330);
+		
+		ctx.fillStyle = '#fefefe';
+		ctx.fillText(`Subscriber 1`, 30, 40)
+		ctx.fillText(`${subscriber.state.timer}`, 30, 70)
+
+		ctx.fillStyle = '#a8eb34';
+		ctx.fillText(`Subscriber 2`, 200, 40)
+		ctx.fillText(`${subscriber2.state.timer}`, 200, 70)
+	}
+
+	const interval = setInterval(() => draw(), 1000)
+
+	return `
+		${Publisher}
+		${Subscriber}
+	`;
+
+}
+
 export const canvasRenderCollection: ICanvasRenderCollection = {
 	singleton,
 	factory,
@@ -274,5 +318,6 @@ export const canvasRenderCollection: ICanvasRenderCollection = {
 	builder,
 	decorator,
 	facade,
-	mediator
+	mediator,
+	observable,
 };
