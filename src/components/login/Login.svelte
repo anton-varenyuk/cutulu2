@@ -4,7 +4,7 @@
 	import { Button } from '../button/';
 	import { form } from './style';
 
-	let userData = { name: '', password: '' };
+	let userData = { name: '123', password: '123' };
 
 	$: disabled = !userData.name || !userData.password;
 </script>
