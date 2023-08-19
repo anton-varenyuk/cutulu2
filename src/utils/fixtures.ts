@@ -22,6 +22,7 @@ import {
 import { DateFacade, DayOfMonth, MonthCalculator, DaysCalculator } from './patterns/facade';
 import { Button, Mediator } from './patterns/mediator';
 import { Publisher, Subscriber } from './patterns/observable';
+import { Dog, Cat as VisitorCat, Visitor, Man } from './patterns/visitor';
 
 export interface IExample {
 	id: number;
@@ -97,6 +98,13 @@ export const Examples = {
 		icon: 'ph:binoculars',
 		description:
 			'Observer is a behavioral design pattern that allows some objects to notify other objects about changes in their state.'
+	},
+	visitor: {
+		id: 'visitor',
+		name: 'Visitor',
+		icon: 'material-symbols:nest-doorbell-visitor-outline-rounded',
+		description:
+			'Visitor is a behavioral design pattern that allows adding new behaviors to existing class hierarchy without altering any existing code.'
 	}
 };
 
@@ -275,7 +283,6 @@ const mediator = (ctx: CanvasRenderingContext2D) => {
 	`;
 };
 
-
 const observable = (ctx: CanvasRenderingContext2D) => {
 	const publisher = new Publisher();
 	const subscriber = new Subscriber();
@@ -292,24 +299,51 @@ const observable = (ctx: CanvasRenderingContext2D) => {
 		ctx.fillStyle = '#4aaff7';
 		ctx.fillText('Observable', 150, 300);
 		ctx.fillText(`${publisher.state.timer}`, 150, 330);
-		
+
 		ctx.fillStyle = '#fefefe';
-		ctx.fillText(`Subscriber 1`, 30, 40)
-		ctx.fillText(`${subscriber.state.timer}`, 30, 70)
+		ctx.fillText(`Subscriber 1`, 30, 40);
+		ctx.fillText(`${subscriber.state.timer}`, 30, 70);
 
 		ctx.fillStyle = '#a8eb34';
-		ctx.fillText(`Subscriber 2`, 200, 40)
-		ctx.fillText(`${subscriber2.state.timer}`, 200, 70)
-	}
+		ctx.fillText(`Subscriber 2`, 200, 40);
+		ctx.fillText(`${subscriber2.state.timer}`, 200, 70);
+	};
 
-	const interval = setInterval(() => draw(), 1000)
+	const interval = setInterval(() => draw(), 1000);
 
 	return `
 		${Publisher}
 		${Subscriber}
 	`;
+};
 
-}
+const visitor = (ctx: CanvasRenderingContext2D) => {
+	const Barbos = new Dog({ name: 'Barbos', state: 'Good boy' });
+	const Sharik = new Dog({ name: 'Sharik', state: 'Bad boy' });
+	const Murzik = new VisitorCat({ name: 'Murzik', furColor: 'black' });
+	const Fluffy = new VisitorCat({ name: 'Fluffy', furColor: 'tabby' });
+	const Rusik = new Man({ name: 'Rusik', gender: 'man' });
+	const Nataha = new Man({ name: 'Nataha', gender: 'woman' });
+
+	const animals = Array.from([Barbos, Sharik, Murzik, Fluffy, Rusik, Nataha]);
+	console.log('animals', animals);
+
+	ctx.font = '24px serif';
+	ctx.fillStyle = '#fefefe';
+
+	animals.forEach((animal, index) => {
+		const visitorsReview = () => {
+			const visitor = new Visitor();
+			animal.accept(visitor);
+			return visitor.getReview();
+		};
+		ctx.fillText(`${visitorsReview()}`, 30, 50 + 50 * index);
+	});
+
+	return `
+		${Visitor}
+	`;
+};
 
 export const canvasRenderCollection: ICanvasRenderCollection = {
 	singleton,
@@ -320,4 +354,5 @@ export const canvasRenderCollection: ICanvasRenderCollection = {
 	facade,
 	mediator,
 	observable,
+	visitor
 };
