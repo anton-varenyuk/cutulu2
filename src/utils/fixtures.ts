@@ -23,6 +23,7 @@ import { DateFacade, DayOfMonth, MonthCalculator, DaysCalculator } from './patte
 import { Button, Mediator } from './patterns/mediator';
 import { Publisher, Subscriber } from './patterns/observable';
 import { Dog, Cat as VisitorCat, Visitor, Man } from './patterns/visitor';
+import { ButtonHandler, WindowHandler } from './patterns/chain-of-responsibility';
 
 export interface IExample {
 	id: number;
@@ -105,6 +106,12 @@ export const Examples = {
 		icon: 'material-symbols:nest-doorbell-visitor-outline-rounded',
 		description:
 			'Visitor is a behavioral design pattern that allows adding new behaviors to existing class hierarchy without altering any existing code.'
+	},
+	chainOfResponsibility: {
+		id: 'chainOfResponsibility',
+		name: 'Chain of Responsibility',
+		icon: 'system-uicons:chain',
+		description: 'chainOfResponsibility'
 	}
 };
 
@@ -345,6 +352,56 @@ const visitor = (ctx: CanvasRenderingContext2D) => {
 	`;
 };
 
+// TODO: refine this example better
+const chainOfResponsibility = (ctx: CanvasRenderingContext2D) => {
+	const button = new ButtonHandler();
+	const window = new WindowHandler();
+
+	const canvas = document.getElementById('canvas');
+	canvas.addEventListener('click', (e) => {
+		const target = e.target as Element;
+		const canvasRect = target.getBoundingClientRect();
+
+		const clickCanvasX = e.pageX - canvasRect.left;
+		const clickCanvasY = e.pageY - canvasRect.top;
+
+		// Button click
+		if (
+			clickCanvasX >= 50 &&
+			clickCanvasX <= 50 + 100 &&
+			clickCanvasY >= 50 &&
+			clickCanvasY <= 50 + 80
+		) {
+			const help = button.handle('button');
+			console.log(help);
+		} else {
+			const help = button.handle('canvas');
+			console.log(help);
+		}
+	});
+
+	const draw = () => {
+		ctx.clearRect(0, 0, 600, 600);
+		ctx.font = '16px serif';
+
+		// window
+		ctx.fillStyle = '#cbcbcb';
+		ctx.fillRect(10, 10, 300, 150);
+
+		// button
+		ctx.fillStyle = '#4aaff7';
+		ctx.fillRect(50, 50, 100, 80);
+		ctx.fillStyle = '#000';
+		ctx.fillText('Button', 60, 70, 100);
+	};
+
+	draw();
+
+	return `
+		${ButtonHandler}
+	`;
+};
+
 export const canvasRenderCollection: ICanvasRenderCollection = {
 	singleton,
 	factory,
@@ -354,5 +411,6 @@ export const canvasRenderCollection: ICanvasRenderCollection = {
 	facade,
 	mediator,
 	observable,
-	visitor
+	visitor,
+	chainOfResponsibility
 };
