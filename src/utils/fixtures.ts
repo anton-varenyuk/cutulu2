@@ -24,6 +24,7 @@ import { Button, Mediator } from './patterns/mediator';
 import { Publisher, Subscriber } from './patterns/observable';
 import { Dog, Cat as VisitorCat, Visitor, Man } from './patterns/visitor';
 import { ButtonHandler, WindowHandler } from './patterns/chain-of-responsibility';
+import { RealSubject, SubjectProxy } from './patterns/proxy';
 
 export interface IExample {
 	id: number;
@@ -111,7 +112,15 @@ export const Examples = {
 		id: 'chainOfResponsibility',
 		name: 'Chain of Responsibility',
 		icon: 'system-uicons:chain',
-		description: 'chainOfResponsibility'
+		description:
+			'Chain of Responsibility is behavioral design pattern that allows passing request along the chain of potential handlers until one of them handles request.'
+	},
+	proxy: {
+		id: 'proxy',
+		name: 'Proxy',
+		icon: 'eos-icons:proxy-outlined',
+		description:
+			'Proxy is a structural design pattern that provides an object that acts as a substitute for a real service object used by a client. A proxy receives client requests, does some work (access control, caching, etc.) and then passes the request to a service object.'
 	}
 };
 
@@ -402,6 +411,31 @@ const chainOfResponsibility = (ctx: CanvasRenderingContext2D) => {
 	`;
 };
 
+const proxy = (ctx: CanvasRenderingContext2D) => {
+	const subject = new RealSubject();
+	const userProxy = new SubjectProxy(subject, false);
+	const adminProxy = new SubjectProxy(subject, true);
+
+	ctx.font = '16px sans-serif';
+	ctx.fillStyle = '#cbcbcb';
+
+	// user doesn't have the access to send requests
+	ctx.fillText('Users request being handled through proxy...', 50, 50);
+	ctx.font = '16px monospace';
+	ctx.fillText(`${userProxy.request()}`, 50, 80);
+
+	// admin does
+	ctx.font = '16px sans-serif';
+	ctx.fillText('Admins request being handled through proxy...', 50, 150);
+	ctx.font = '16px monospace';
+	ctx.fillText(`${adminProxy.request()}`, 50, 180);
+
+	return `
+		${RealSubject}
+		${SubjectProxy}
+	`;
+};
+
 export const canvasRenderCollection: ICanvasRenderCollection = {
 	singleton,
 	factory,
@@ -412,5 +446,6 @@ export const canvasRenderCollection: ICanvasRenderCollection = {
 	mediator,
 	observable,
 	visitor,
-	chainOfResponsibility
+	chainOfResponsibility,
+	proxy
 };
