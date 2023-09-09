@@ -25,6 +25,7 @@ import { Publisher, Subscriber } from './patterns/observable';
 import { Dog, Cat as VisitorCat, Visitor, Man } from './patterns/visitor';
 import { ButtonHandler, WindowHandler } from './patterns/chain-of-responsibility';
 import { RealSubject, SubjectProxy } from './patterns/proxy';
+import { curry } from './other/currying';
 
 export interface IExample {
 	id: number;
@@ -121,6 +122,12 @@ export const Examples = {
 		icon: 'eos-icons:proxy-outlined',
 		description:
 			'Proxy is a structural design pattern that provides an object that acts as a substitute for a real service object used by a client. A proxy receives client requests, does some work (access control, caching, etc.) and then passes the request to a service object.'
+	},
+	currying: {
+		id: 'currying',
+		name: 'Currying',
+		icon: 'eos-icons:proxy-outlined',
+		description: 'PCurrying'
 	}
 };
 
@@ -436,6 +443,28 @@ const proxy = (ctx: CanvasRenderingContext2D) => {
 	`;
 };
 
+const currying = (ctx: CanvasRenderingContext2D) => {
+	const uncurried = (a, b, c) => {
+		return a + b + c;
+	};
+
+	const curried = curry(uncurried);
+
+	const curriedOne = curried(10);
+	const curriedTwo = curriedOne(20);
+	const curriedThree = curriedTwo(30);
+
+	ctx.font = '18px sans-serif';
+	ctx.fillStyle = '#cbcbcb';
+
+	ctx.fillText('Uncurried functions transformed into curried...', 50, 50);
+	ctx.fillText(`Three arguments 10 + 20 + 30 in sum return: ${curriedThree} `, 50, 100);
+
+	return `
+		${curry}
+	`;
+};
+
 export const canvasRenderCollection: ICanvasRenderCollection = {
 	singleton,
 	factory,
@@ -447,5 +476,6 @@ export const canvasRenderCollection: ICanvasRenderCollection = {
 	observable,
 	visitor,
 	chainOfResponsibility,
-	proxy
+	proxy,
+	currying
 };
