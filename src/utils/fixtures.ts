@@ -373,6 +373,8 @@ const chainOfResponsibility = (ctx: CanvasRenderingContext2D) => {
 	const button = new ButtonHandler();
 	const window = new WindowHandler();
 
+	button.setSuccessor(window)
+
 	const canvas = document.getElementById('canvas');
 	canvas.addEventListener('click', (e) => {
 		const target = e.target as Element;
@@ -391,7 +393,7 @@ const chainOfResponsibility = (ctx: CanvasRenderingContext2D) => {
 			const help = button.handle('button');
 			console.log(help);
 		} else {
-			const help = button.handle('canvas');
+			const help = button.handle('window');
 			console.log(help);
 		}
 	});
