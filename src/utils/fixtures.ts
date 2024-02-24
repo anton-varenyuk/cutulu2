@@ -26,6 +26,12 @@ import { Dog, Cat as VisitorCat, Visitor, Man } from './patterns/visitor';
 import { ButtonHandler, WindowHandler } from './patterns/chain-of-responsibility';
 import { RealSubject, SubjectProxy } from './patterns/proxy';
 import { curry } from './other/currying';
+import {
+	Component as CompositeComponent,
+	Node as CompositeNode,
+	Detail as CompositeDetail,
+	Calculator as CompositeCalculator
+} from "./patterns/composite";
 
 export interface IExample {
 	id: number;
@@ -128,6 +134,12 @@ export const Examples = {
 		name: 'Currying',
 		icon: 'eos-icons:proxy-outlined',
 		description: 'PCurrying'
+	},
+	composite: {
+		id: 'composite',
+		name: 'Composite',
+		icon: 'icomoon-free:tree',
+		description: 'Composite is a structural design pattern that allows composing objects into a tree-like structure and work with the it as if it was a singular object.'
 	}
 };
 
@@ -368,7 +380,6 @@ const visitor = (ctx: CanvasRenderingContext2D) => {
 	`;
 };
 
-// TODO: refine this example better
 const chainOfResponsibility = (ctx: CanvasRenderingContext2D) => {
 	const button = new ButtonHandler();
 	const window = new WindowHandler();
@@ -467,6 +478,86 @@ const currying = (ctx: CanvasRenderingContext2D) => {
 	`;
 };
 
+const composite = (ctx: CanvasRenderingContext2D) => {
+	const car = new CompositeNode();
+
+	// Engine
+	const engine = new CompositeNode();
+	const engineCoffer = new CompositeDetail(200);
+	const enginePistons = new CompositeDetail(400);
+	const engineGears = new CompositeDetail(143);
+
+	engine.add(engineCoffer);
+	engine.add(enginePistons);
+	engine.add(engineGears);
+
+	car.add(engine);
+
+	// Transmission
+	const transmission = new CompositeNode();
+
+	const gearBox = new CompositeNode();
+	const gearboxGears = new CompositeDetail(100);
+	const gearboxDetails = new CompositeDetail(222);
+	gearBox.add(gearboxGears);
+	gearBox.add(gearboxDetails);
+	transmission.add(gearBox);
+
+	const chasis = new CompositeNode();
+	const chasisGears = new CompositeDetail(343);
+	const chasisLevers = new CompositeDetail(332);
+	chasis.add(chasisGears);
+	chasis.add(chasisLevers);
+	transmission.add(chasis);
+
+	const transmissionGears = new CompositeDetail(500);
+	transmission.add(transmissionGears);
+
+	car.add(transmission);
+
+	// Body
+	const body = new CompositeNode();
+	const bodyParts = new CompositeDetail(242);
+	body.add(bodyParts);
+
+	const cabin = new CompositeNode();
+	const seats = new CompositeDetail(100);
+	const furniture = new CompositeDetail(12);
+	cabin.add(seats);
+	cabin.add(furniture);
+	body.add(cabin);
+
+	car.add(body);
+
+	// Wheels
+	const wheels = new CompositeDetail(400);
+
+	car.add(wheels);
+
+	// Calculate prices
+	const engineCalculator = CompositeCalculator(engine);
+	const transmissionCalculator = CompositeCalculator(transmission);
+	const bodyCalculator = CompositeCalculator(body);
+	const wheelsCalculator = CompositeCalculator(wheels);
+	const carCalculator = CompositeCalculator(car);
+
+	ctx.font = '16px sans-serif';
+	ctx.fillStyle = '#cbcbcb';
+	ctx.fillText(`Engine price: ${engineCalculator}`, 50, 50 );
+	ctx.fillText(`Transmission price: ${transmissionCalculator}`, 50, 100 );
+	ctx.fillText(`Body price: ${bodyCalculator}`, 50, 150 );
+	ctx.fillText(`Wheels price: ${wheelsCalculator}`, 50, 200 );
+	ctx.fillRect(50, 220, 400, 3);
+	ctx.fillText(`Total car price: ${carCalculator}`, 50, 270 );
+
+
+	return `
+		${CompositeComponent}
+		${CompositeNode}
+		${CompositeDetail}
+	`
+}
+
 export const canvasRenderCollection: ICanvasRenderCollection = {
 	singleton,
 	factory,
@@ -479,5 +570,6 @@ export const canvasRenderCollection: ICanvasRenderCollection = {
 	visitor,
 	chainOfResponsibility,
 	proxy,
-	currying
+	currying,
+	composite,
 };
