@@ -32,6 +32,7 @@ import {
 	Detail as CompositeDetail,
 	Calculator as CompositeCalculator
 } from "./patterns/composite";
+import {Prototype} from "./patterns/prototype";
 
 export interface IExample {
 	id: number;
@@ -140,6 +141,12 @@ export const Examples = {
 		name: 'Composite',
 		icon: 'icomoon-free:tree',
 		description: 'Composite is a structural design pattern that allows composing objects into a tree-like structure and work with the it as if it was a singular object.'
+	},
+	prototype: {
+		id: 'prototype',
+		name: 'Prototype',
+		icon: 'fe:prototype',
+		description: 'Prototype is a creational design pattern that allows cloning objects, even complex ones, without coupling to their specific classes.'
 	}
 };
 
@@ -558,6 +565,61 @@ const composite = (ctx: CanvasRenderingContext2D) => {
 	`
 }
 
+const prototype = (ctx: CanvasRenderingContext2D) => {
+	const prototypes = [new Prototype()]
+	const canvas = document.getElementById('canvas');
+
+	const handleClone = () => {
+		prototypes.push(prototypes[prototypes.length - 1].clone());
+		draw();
+	}
+
+
+	const draw = () => {
+		// Clone button
+		ctx.font = '16px sans-serif';
+		ctx.fillStyle = '#994a28';
+		ctx.fillRect(50, 220, 200, 50);
+		ctx.fillStyle = '#dcdcdc';
+		ctx.fillText('Clone the last prototype', 55, 250, 390);
+
+		// draw clone list
+		prototypes.forEach((p, i) => {
+			ctx.fillStyle = p.props.background;
+			ctx.fillRect(50 + 50 * i, 50 , p.props.width, p.props.height );
+			ctx.fillStyle = p.props.color;
+			ctx.fillText(p.content, 53 + 53 * i, 65);
+		})
+
+	}
+
+
+	canvas.addEventListener('click', (e) => {
+		const target = e.target as Element;
+		const canvasRect = target.getBoundingClientRect();
+
+		const clickCanvasX = e.pageX - canvasRect.left;
+		const clickCanvasY = e.pageY - canvasRect.top;
+
+		// Button 1 click
+		if (
+			clickCanvasX >= 50 &&
+			clickCanvasX <= 50 + 200 &&
+			clickCanvasY >= 220 &&
+			clickCanvasY <= 50 + 220
+		) {
+			handleClone();
+		}
+	});
+
+	draw();
+
+
+	return `
+		${Prototype}
+	`
+}
+
 export const canvasRenderCollection: ICanvasRenderCollection = {
 	singleton,
 	factory,
@@ -572,4 +634,5 @@ export const canvasRenderCollection: ICanvasRenderCollection = {
 	proxy,
 	currying,
 	composite,
+	prototype,
 };
