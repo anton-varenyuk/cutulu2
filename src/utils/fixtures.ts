@@ -33,6 +33,13 @@ import {
 	Calculator as CompositeCalculator
 } from "./patterns/composite";
 import {Prototype} from "./patterns/prototype";
+import {
+	Abstraction,
+	WindowsImplementor,
+	Client as BridgeClient,
+	LinuxImplementor,
+	MacOSImplementor,
+} from "./patterns/bridge";
 
 export interface IExample {
 	id: number;
@@ -147,6 +154,12 @@ export const Examples = {
 		name: 'Prototype',
 		icon: 'fe:prototype',
 		description: 'Prototype is a creational design pattern that allows cloning objects, even complex ones, without coupling to their specific classes.'
+	},
+	bridge: {
+		id: 'bridge',
+		name: 'Bridge',
+		icon: 'mdi:bridge',
+		description: 'Bridge is a structural design pattern that divides business logic or huge class into separate class hierarchies that can be developed independently.'
 	}
 };
 
@@ -620,6 +633,67 @@ const prototype = (ctx: CanvasRenderingContext2D) => {
 	`
 }
 
+const bridge = (ctx: CanvasRenderingContext2D) => {
+	const linuxImplementation = new LinuxImplementor();
+	const macImplementation = new MacOSImplementor();
+	const windowsImplementation = new WindowsImplementor();
+	const implementations = [linuxImplementation, macImplementation, windowsImplementation];
+	let currentImplementationIndex = 0;
+
+	const abstraction = new Abstraction(implementations[currentImplementationIndex]);
+	const clientCode = new BridgeClient(abstraction);
+	const canvas = document.getElementById('canvas');
+
+
+	const changeImplementation = () => {
+		currentImplementationIndex++;
+
+		if (currentImplementationIndex > 2) {
+			currentImplementationIndex = 0;
+		}
+
+		clientCode.changeImplementation(implementations[currentImplementationIndex]);
+	}
+
+	canvas.addEventListener('click', (e) => {
+		const target = e.target as Element;
+		const canvasRect = target.getBoundingClientRect();
+
+		const clickCanvasX = e.pageX - canvasRect.left;
+		const clickCanvasY = e.pageY - canvasRect.top;
+
+		// Button click
+		if (
+			clickCanvasX >= 50 &&
+			clickCanvasX <= 50 + 200 &&
+			clickCanvasY >= 50 &&
+			clickCanvasY <= 50 + 30
+		) {
+			changeImplementation();
+			drawUI();
+		}
+	});
+
+	const drawUI = () => {
+		ctx.clearRect(0, 0, 600, 600);
+
+		// Button
+		ctx.fillStyle = '#fefefe';
+		ctx.fillRect(50, 50, 200, 30);
+		ctx.fillStyle = '#383838';
+		ctx.font = '16px sans-serif';
+		ctx.fillText('Change implementation', 70, 70, 150);
+		clientCode.drawWindow(ctx);
+	}
+
+	drawUI();
+
+	return `
+		${Abstraction}
+		${BridgeClient}
+	`
+}
+
 export const canvasRenderCollection: ICanvasRenderCollection = {
 	singleton,
 	factory,
@@ -635,4 +709,5 @@ export const canvasRenderCollection: ICanvasRenderCollection = {
 	currying,
 	composite,
 	prototype,
+	bridge,
 };
