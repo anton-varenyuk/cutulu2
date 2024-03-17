@@ -1,15 +1,15 @@
 // TODO: move types somewhere
 
-import { client, Creator, Dude1, Dude2, DudeCreator1, DudeCreator2 } from './patterns/factory';
-import { client as abstract, CatFactory, DogFactory, Cat } from './patterns/abstract-factory';
-import { Singleton } from './patterns/singleton';
+import { client, Creator, Dude1, Dude2, DudeCreator1, DudeCreator2 } from '../patterns/factory';
+import { client as abstract, CatFactory, DogFactory, Cat } from '../patterns/abstract-factory';
+import { Singleton } from '../patterns/singleton';
 import {
 	client as builderClient,
 	Director,
 	AbominationBuilder,
 	abom1,
 	abom2
-} from './patterns/builder';
+} from '../patterns/builder';
 import {
 	dev,
 	juniorDev,
@@ -18,28 +18,30 @@ import {
 	client as decoratorClient,
 	Decorator,
 	DeveloperComponent
-} from './patterns/decorator';
-import { DateFacade, DayOfMonth, MonthCalculator, DaysCalculator } from './patterns/facade';
-import { Button, Mediator } from './patterns/mediator';
-import { Publisher, Subscriber } from './patterns/observable';
-import { Dog, Cat as VisitorCat, Visitor, Man } from './patterns/visitor';
-import { ButtonHandler, WindowHandler } from './patterns/chain-of-responsibility';
-import { RealSubject, SubjectProxy } from './patterns/proxy';
+} from '../patterns/decorator';
+import { DateFacade, DayOfMonth, MonthCalculator, DaysCalculator } from '../patterns/facade';
+import { Button, Mediator } from '../patterns/mediator';
+import { Publisher, Subscriber } from '../patterns/observable';
+import { Dog, Cat as VisitorCat, Visitor, Man } from '../patterns/visitor';
+import { ButtonHandler, WindowHandler } from '../patterns/chain-of-responsibility';
+import { RealSubject, SubjectProxy } from '../patterns/proxy';
 import { curry } from './other/currying';
 import {
 	Component as CompositeComponent,
 	Node as CompositeNode,
 	Detail as CompositeDetail,
 	Calculator as CompositeCalculator
-} from "./patterns/composite";
-import {Prototype} from "./patterns/prototype";
+} from "../patterns/composite";
+import {Prototype} from "../patterns/prototype";
 import {
 	Abstraction,
 	WindowsImplementor,
 	Client as BridgeClient,
 	LinuxImplementor,
 	MacOSImplementor,
-} from "./patterns/bridge";
+} from "../patterns/bridge";
+import {Flyweight, FlyWeightFactory} from "../patterns/flyweight";
+import type {CharProps} from "../patterns/flyweight";
 
 export interface IExample {
 	id: number;
@@ -160,6 +162,12 @@ export const Examples = {
 		name: 'Bridge',
 		icon: 'mdi:bridge',
 		description: 'Bridge is a structural design pattern that divides business logic or huge class into separate class hierarchies that can be developed independently.'
+	},
+	flyweight: {
+		id: 'flyweight',
+		name: 'Flyweight',
+		icon: 'bi:feather',
+		description: 'Flyweight is a structural design pattern that allows programs to support vast quantities of objects by keeping their memory consumption low.'
 	}
 };
 
@@ -694,6 +702,106 @@ const bridge = (ctx: CanvasRenderingContext2D) => {
 	`
 }
 
+const flyweight = (ctx: CanvasRenderingContext2D) => {
+	const canvas = document.getElementById('canvas');
+
+
+	let isBold = false;
+	let isItalic = false;
+	const line = 1;
+
+	const letters: Flyweight[] = [];
+
+	const factory = new FlyWeightFactory([]);
+
+	const getCharProps = (char: string): CharProps => {
+		return {
+			char,
+			state: {
+			...(isBold && {bold: true}),
+			...(isItalic && {italic: true})
+			}
+		}
+	}
+
+
+	const draw = () => {
+		ctx.clearRect(0, 0, 600, 600);
+		// Bold Button
+		ctx.fillStyle = '#fefefe';
+		ctx.fillRect(50, 50, 50, 50);
+		ctx.fillStyle = '#353535';
+		ctx.font = `${isBold ? 'bold ' : ''}28px sans-serif`;
+		ctx.fillText('B', 65, 85, 50);
+
+		// Italic Button
+		ctx.fillStyle = '#fefefe';
+		ctx.fillRect(110, 50, 50, 50);
+		ctx.fillStyle = '#353535';
+		ctx.font = `${isItalic ? 'bold ' : ''}28px sans-serif`;
+		ctx.fillText('I', 130, 85, 50);
+
+		// Text
+		ctx.fillStyle = '#fefefe';
+		ctx.font = `${isBold && 'bold '}26px sans-serif`;
+		ctx.textBaseline = 'alphabetic';
+
+		letters.forEach((l, i) => {
+			ctx.fillText(l.processChar(ctx), 20 + 20 * i, 150 + line * 30);
+		})
+	}
+
+	canvas.addEventListener('click', (e) => {
+		const target = e.target as Element;
+		const canvasRect = target.getBoundingClientRect();
+
+		const clickCanvasX = e.pageX - canvasRect.left;
+		const clickCanvasY = e.pageY - canvasRect.top;
+
+		// Bold btn click
+		if (
+			clickCanvasX >= 50 &&
+			clickCanvasX <= 50 + 50 &&
+			clickCanvasY >= 50 &&
+			clickCanvasY <= 50 + 50
+		) {
+			isBold = !isBold;
+			draw();
+		}
+
+		// Italic btn click
+		if (
+			clickCanvasX >= 110 &&
+			clickCanvasX <= 110 + 50 &&
+			clickCanvasY >= 50 &&
+			clickCanvasY <= 50 + 50
+		) {
+			isItalic = !isItalic;
+			draw();
+		}
+	});
+
+
+	document?.addEventListener('keydown', (e) => {
+		switch (e.key) {
+			case 'Backspace':
+				letters.pop();
+				break;
+			case 'Enter':
+				break;
+			default:
+				letters.push(factory.getFlyWeight(getCharProps(e.key)));
+				factory.listFlyWeights()
+		}
+
+		draw();
+	})
+
+	draw();
+
+	return `${Flyweight}`
+}
+
 export const canvasRenderCollection: ICanvasRenderCollection = {
 	singleton,
 	factory,
@@ -710,4 +818,5 @@ export const canvasRenderCollection: ICanvasRenderCollection = {
 	composite,
 	prototype,
 	bridge,
+	flyweight,
 };
