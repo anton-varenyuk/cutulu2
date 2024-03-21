@@ -31,17 +31,17 @@ import {
 	Node as CompositeNode,
 	Detail as CompositeDetail,
 	Calculator as CompositeCalculator
-} from "../patterns/composite";
-import {Prototype} from "../patterns/prototype";
+} from '../patterns/composite';
+import { Prototype } from '../patterns/prototype';
 import {
 	Abstraction,
 	WindowsImplementor,
 	Client as BridgeClient,
 	LinuxImplementor,
-	MacOSImplementor,
-} from "../patterns/bridge";
-import {Flyweight, FlyWeightFactory} from "../patterns/flyweight";
-import type {CharProps} from "../patterns/flyweight";
+	MacOSImplementor
+} from '../patterns/bridge';
+import { Flyweight, FlyWeightFactory } from '../patterns/flyweight';
+import type { CharProps } from '../patterns/flyweight';
 
 export interface IExample {
 	id: number;
@@ -65,109 +65,82 @@ export const Examples = {
 	singleton: {
 		id: 'singleton',
 		name: 'Singleton',
-		icon: 'icon-park-outline:one',
-		description:
-			'Singleton is a creational design pattern that lets you ensure that a class has only one instance, while providing a global access point to this instance.'
+		icon: 'icon-park-outline:one'
 	},
 	factory: {
 		id: 'factory',
 		name: 'Factory',
-		icon: 'material-symbols:factory-outline',
-		description:
-			'Factory Method is a creational design pattern that provides an interface for creating objects in a superclass, but allows subclasses to alter the type of objects that will be created.'
+		icon: 'material-symbols:factory-outline'
 	},
 	abstractFactory: {
 		id: 'abstractFactory',
 		name: 'Abstract Factory',
-		icon: 'material-symbols:draw-abstract-outline',
-		description:
-			'Abstract Factory is a creational design pattern, which solves the problem of creating entire product families without specifying their concrete classes.'
+		icon: 'material-symbols:draw-abstract-outline'
 	},
 	builder: {
 		id: 'builder',
 		name: 'Builder',
-		icon: 'fluent-mdl2:build-definition',
-		description:
-			'Builder is a creational design pattern, which allows constructing complex objects step by step'
+		icon: 'fluent-mdl2:build-definition'
 	},
 	decorator: {
 		id: 'decorator',
 		name: 'Decorator',
-		icon: 'material-symbols:layers-outline-rounded',
-		description:
-			'Decorator is a structural design pattern that lets you attach new behaviors to objects by placing these objects inside special wrapper objects that contain the behaviors.'
+		icon: 'material-symbols:layers-outline-rounded'
 	},
 	facade: {
 		id: 'facade',
 		name: 'Facade',
-		icon: 'material-symbols:garage-home-outline',
-		description:
-			'Facade is a structural design pattern that provides a simplified (but limited) interface to a complex system of classes, library or framework.'
+		icon: 'material-symbols:garage-home-outline'
 	},
 	mediator: {
 		id: 'mediator',
 		name: 'Mediator',
-		icon: 'material-symbols:interactive-space-outline-sharp',
-		description:
-			'Mediator is a behavioral design pattern that reduces coupling between components of a program by making them communicate indirectly, through a special mediator object.'
+		icon: 'material-symbols:interactive-space-outline-sharp'
 	},
 	observable: {
 		id: 'observable',
 		name: 'Observable',
-		icon: 'ph:binoculars',
-		description:
-			'Observer is a behavioral design pattern that allows some objects to notify other objects about changes in their state.'
+		icon: 'ph:binoculars'
 	},
 	visitor: {
 		id: 'visitor',
 		name: 'Visitor',
-		icon: 'material-symbols:nest-doorbell-visitor-outline-rounded',
-		description:
-			'Visitor is a behavioral design pattern that allows adding new behaviors to existing class hierarchy without altering any existing code.'
+		icon: 'material-symbols:nest-doorbell-visitor-outline-rounded'
 	},
 	chainOfResponsibility: {
 		id: 'chainOfResponsibility',
 		name: 'Chain of Responsibility',
-		icon: 'system-uicons:chain',
-		description:
-			'Chain of Responsibility is behavioral design pattern that allows passing request along the chain of potential handlers until one of them handles request.'
+		icon: 'system-uicons:chain'
 	},
 	proxy: {
 		id: 'proxy',
 		name: 'Proxy',
-		icon: 'eos-icons:proxy-outlined',
-		description:
-			'Proxy is a structural design pattern that provides an object that acts as a substitute for a real service object used by a client. A proxy receives client requests, does some work (access control, caching, etc.) and then passes the request to a service object.'
+		icon: 'eos-icons:proxy-outlined'
 	},
 	currying: {
 		id: 'currying',
 		name: 'Currying',
-		icon: 'eos-icons:proxy-outlined',
-		description: 'PCurrying'
+		icon: 'mdi:map-marker-path'
 	},
 	composite: {
 		id: 'composite',
 		name: 'Composite',
-		icon: 'icomoon-free:tree',
-		description: 'Composite is a structural design pattern that allows composing objects into a tree-like structure and work with the it as if it was a singular object.'
+		icon: 'icomoon-free:tree'
 	},
 	prototype: {
 		id: 'prototype',
 		name: 'Prototype',
-		icon: 'fe:prototype',
-		description: 'Prototype is a creational design pattern that allows cloning objects, even complex ones, without coupling to their specific classes.'
+		icon: 'fe:prototype'
 	},
 	bridge: {
 		id: 'bridge',
 		name: 'Bridge',
-		icon: 'mdi:bridge',
-		description: 'Bridge is a structural design pattern that divides business logic or huge class into separate class hierarchies that can be developed independently.'
+		icon: 'mdi:bridge'
 	},
 	flyweight: {
 		id: 'flyweight',
 		name: 'Flyweight',
-		icon: 'bi:feather',
-		description: 'Flyweight is a structural design pattern that allows programs to support vast quantities of objects by keeping their memory consumption low.'
+		icon: 'bi:feather'
 	}
 };
 
@@ -412,7 +385,7 @@ const chainOfResponsibility = (ctx: CanvasRenderingContext2D) => {
 	const button = new ButtonHandler();
 	const window = new WindowHandler();
 
-	button.setSuccessor(window)
+	button.setSuccessor(window);
 
 	const canvas = document.getElementById('canvas');
 	canvas.addEventListener('click', (e) => {
@@ -571,30 +544,28 @@ const composite = (ctx: CanvasRenderingContext2D) => {
 
 	ctx.font = '16px sans-serif';
 	ctx.fillStyle = '#cbcbcb';
-	ctx.fillText(`Engine price: ${engineCalculator}`, 50, 50 );
-	ctx.fillText(`Transmission price: ${transmissionCalculator}`, 50, 100 );
-	ctx.fillText(`Body price: ${bodyCalculator}`, 50, 150 );
-	ctx.fillText(`Wheels price: ${wheelsCalculator}`, 50, 200 );
+	ctx.fillText(`Engine price: ${engineCalculator}`, 50, 50);
+	ctx.fillText(`Transmission price: ${transmissionCalculator}`, 50, 100);
+	ctx.fillText(`Body price: ${bodyCalculator}`, 50, 150);
+	ctx.fillText(`Wheels price: ${wheelsCalculator}`, 50, 200);
 	ctx.fillRect(50, 220, 400, 3);
-	ctx.fillText(`Total car price: ${carCalculator}`, 50, 270 );
-
+	ctx.fillText(`Total car price: ${carCalculator}`, 50, 270);
 
 	return `
 		${CompositeComponent}
 		${CompositeNode}
 		${CompositeDetail}
-	`
-}
+	`;
+};
 
 const prototype = (ctx: CanvasRenderingContext2D) => {
-	const prototypes = [new Prototype()]
+	const prototypes = [new Prototype()];
 	const canvas = document.getElementById('canvas');
 
 	const handleClone = () => {
 		prototypes.push(prototypes[prototypes.length - 1].clone());
 		draw();
-	}
-
+	};
 
 	const draw = () => {
 		// Clone button
@@ -607,13 +578,11 @@ const prototype = (ctx: CanvasRenderingContext2D) => {
 		// draw clone list
 		prototypes.forEach((p, i) => {
 			ctx.fillStyle = p.props.background;
-			ctx.fillRect(50 + 50 * i, 50 , p.props.width, p.props.height );
+			ctx.fillRect(50 + 50 * i, 50, p.props.width, p.props.height);
 			ctx.fillStyle = p.props.color;
 			ctx.fillText(p.content, 53 + 53 * i, 65);
-		})
-
-	}
-
+		});
+	};
 
 	canvas.addEventListener('click', (e) => {
 		const target = e.target as Element;
@@ -635,11 +604,10 @@ const prototype = (ctx: CanvasRenderingContext2D) => {
 
 	draw();
 
-
 	return `
 		${Prototype}
-	`
-}
+	`;
+};
 
 const bridge = (ctx: CanvasRenderingContext2D) => {
 	const linuxImplementation = new LinuxImplementor();
@@ -652,7 +620,6 @@ const bridge = (ctx: CanvasRenderingContext2D) => {
 	const clientCode = new BridgeClient(abstraction);
 	const canvas = document.getElementById('canvas');
 
-
 	const changeImplementation = () => {
 		currentImplementationIndex++;
 
@@ -661,7 +628,7 @@ const bridge = (ctx: CanvasRenderingContext2D) => {
 		}
 
 		clientCode.changeImplementation(implementations[currentImplementationIndex]);
-	}
+	};
 
 	canvas.addEventListener('click', (e) => {
 		const target = e.target as Element;
@@ -692,19 +659,18 @@ const bridge = (ctx: CanvasRenderingContext2D) => {
 		ctx.font = '16px sans-serif';
 		ctx.fillText('Change implementation', 70, 70, 150);
 		clientCode.drawWindow(ctx);
-	}
+	};
 
 	drawUI();
 
 	return `
 		${Abstraction}
 		${BridgeClient}
-	`
-}
+	`;
+};
 
 const flyweight = (ctx: CanvasRenderingContext2D) => {
 	const canvas = document.getElementById('canvas');
-
 
 	let isBold = false;
 	let isItalic = false;
@@ -718,12 +684,11 @@ const flyweight = (ctx: CanvasRenderingContext2D) => {
 		return {
 			char,
 			state: {
-			...(isBold && {bold: true}),
-			...(isItalic && {italic: true})
+				...(isBold && { bold: true }),
+				...(isItalic && { italic: true })
 			}
-		}
-	}
-
+		};
+	};
 
 	const draw = () => {
 		ctx.clearRect(0, 0, 600, 600);
@@ -748,8 +713,8 @@ const flyweight = (ctx: CanvasRenderingContext2D) => {
 
 		letters.forEach((l, i) => {
 			ctx.fillText(l.processChar(ctx), 20 + 20 * i, 150 + line * 30);
-		})
-	}
+		});
+	};
 
 	canvas.addEventListener('click', (e) => {
 		const target = e.target as Element;
@@ -781,7 +746,6 @@ const flyweight = (ctx: CanvasRenderingContext2D) => {
 		}
 	});
 
-
 	document?.addEventListener('keydown', (e) => {
 		switch (e.key) {
 			case 'Backspace':
@@ -791,16 +755,16 @@ const flyweight = (ctx: CanvasRenderingContext2D) => {
 				break;
 			default:
 				letters.push(factory.getFlyWeight(getCharProps(e.key)));
-				factory.listFlyWeights()
+				factory.listFlyWeights();
 		}
 
 		draw();
-	})
+	});
 
 	draw();
 
-	return `${Flyweight}`
-}
+	return `${Flyweight}`;
+};
 
 export const canvasRenderCollection: ICanvasRenderCollection = {
 	singleton,
@@ -818,5 +782,5 @@ export const canvasRenderCollection: ICanvasRenderCollection = {
 	composite,
 	prototype,
 	bridge,
-	flyweight,
+	flyweight
 };
