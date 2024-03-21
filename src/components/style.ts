@@ -24,6 +24,7 @@ export const header = css`
 	padding: 0 ${spacing(5)};
 	align-items: center;
 	height: 80px;
+	position: relative;
 `;
 
 export const logo = css`
@@ -45,4 +46,12 @@ export const textButton = css`
 	cursor: pointer;
 	font-weight: bold;
 	font-size: 16px;
+`;
+
+export const language = css`
+	cursor: pointer;
+
+	&:hover {
+		font-weight: bold;
+	}
 `;
