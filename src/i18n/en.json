@@ -1,4 +1,5 @@
 {
+	"added": "Added",
 	"flyweight": "Flyweight",
 	"flyweight_disclaimer": "Flyweight is a structural design pattern that lets you fit more objects into the available amount of RAM by sharing common parts of state between multiple objects instead of keeping all of the data in each object.",
 	"bridge": "Bridge",
@@ -15,7 +16,7 @@
 	"chainOfResponsibility_disclaimer": "Chain of Responsibility is a behavioral design pattern that lets you pass requests along a chain of handlers. Upon receiving a request, each handler decides either to process the request or to pass it to the next handler in the chain.",
 	"visitor": "Visitor",
 	"visitor_disclaimer": "Visitor is a behavioral design pattern that lets you separate algorithms from the objects on which they operate.",
-	"observable": "Спостерігач",
+	"observable": "Observer",
 	"observable_disclaimer": "Observer is a behavioral design pattern that lets you define a subscription mechanism to notify multiple objects about any events that happen to the object they’re observing.",
 	"mediator": "Mediator",
 	"mediator_disclaimer": "Mediator is a behavioral design pattern that lets you reduce chaotic dependencies between objects. The pattern restricts direct communications between the objects and forces them to collaborate only via a mediator object.\n\n",
@@ -30,5 +31,7 @@
 	"factory": "Factory Method",
 	"factory_disclaimer": "Factory Method is a creational design pattern that provides an interface for creating objects in a superclass, but allows subclasses to alter the type of objects that will be created.",
 	"singleton": "Singleton",
-	"singleton_disclaimer": "Singleton is a creational design pattern that lets you ensure that a class has only one instance, while providing a global access point to this instance."
+	"singleton_disclaimer": "Singleton is a creational design pattern that lets you ensure that a class has only one instance, while providing a global access point to this instance.",
+	"hashFunction": "Hash Function",
+	"hashFunction_disclaimer": "A hash function is any function that can be used to map data of arbitrary size to fixed-size values, though there are some hash functions that support variable length output."
 }

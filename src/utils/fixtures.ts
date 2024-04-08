@@ -42,6 +42,7 @@ import {
 } from '../patterns/bridge';
 import { Flyweight, FlyWeightFactory } from '../patterns/flyweight';
 import type { CharProps } from '../patterns/flyweight';
+import { hash } from './other/hash';
 
 export interface IExample {
 	id: number;
@@ -60,89 +61,6 @@ export type ExampleId = keyof ExamplesCollection;
 export interface IExampleLibrary {
 	[key: string]: IExample;
 }
-
-export const Examples = {
-	singleton: {
-		id: 'singleton',
-		name: 'Singleton',
-		icon: 'icon-park-outline:one'
-	},
-	factory: {
-		id: 'factory',
-		name: 'Factory',
-		icon: 'material-symbols:factory-outline'
-	},
-	abstractFactory: {
-		id: 'abstractFactory',
-		name: 'Abstract Factory',
-		icon: 'material-symbols:draw-abstract-outline'
-	},
-	builder: {
-		id: 'builder',
-		name: 'Builder',
-		icon: 'fluent-mdl2:build-definition'
-	},
-	decorator: {
-		id: 'decorator',
-		name: 'Decorator',
-		icon: 'material-symbols:layers-outline-rounded'
-	},
-	facade: {
-		id: 'facade',
-		name: 'Facade',
-		icon: 'material-symbols:garage-home-outline'
-	},
-	mediator: {
-		id: 'mediator',
-		name: 'Mediator',
-		icon: 'material-symbols:interactive-space-outline-sharp'
-	},
-	observable: {
-		id: 'observable',
-		name: 'Observable',
-		icon: 'ph:binoculars'
-	},
-	visitor: {
-		id: 'visitor',
-		name: 'Visitor',
-		icon: 'material-symbols:nest-doorbell-visitor-outline-rounded'
-	},
-	chainOfResponsibility: {
-		id: 'chainOfResponsibility',
-		name: 'Chain of Responsibility',
-		icon: 'system-uicons:chain'
-	},
-	proxy: {
-		id: 'proxy',
-		name: 'Proxy',
-		icon: 'eos-icons:proxy-outlined'
-	},
-	currying: {
-		id: 'currying',
-		name: 'Currying',
-		icon: 'mdi:map-marker-path'
-	},
-	composite: {
-		id: 'composite',
-		name: 'Composite',
-		icon: 'icomoon-free:tree'
-	},
-	prototype: {
-		id: 'prototype',
-		name: 'Prototype',
-		icon: 'fe:prototype'
-	},
-	bridge: {
-		id: 'bridge',
-		name: 'Bridge',
-		icon: 'mdi:bridge'
-	},
-	flyweight: {
-		id: 'flyweight',
-		name: 'Flyweight',
-		icon: 'bi:feather'
-	}
-};
 
 // RENDER FUNCTIONS
 const singleton = (ctx: CanvasRenderingContext2D): string => {
@@ -766,6 +684,47 @@ const flyweight = (ctx: CanvasRenderingContext2D) => {
 	return `${Flyweight}`;
 };
 
+const hashFunction = (ctx: CanvasRenderingContext2D) => {
+	let inputString = '';
+	let hashed = '';
+
+	const draw = () => {
+		ctx.clearRect(0, 0, 600, 600);
+
+		// Input
+		ctx.fillStyle = '#fefefe';
+		ctx.font = '16px sans-serif';
+		ctx.fillText('Input string', 50, 50);
+		ctx.fillText(inputString, 50, 100);
+
+		// Hash
+		ctx.fillText('Hashed string', 50, 200);
+		ctx.fillText(`${hashed}`, 50, 250);
+	};
+
+	document?.addEventListener('keydown', (e) => {
+		switch (e.key) {
+			case 'Backspace':
+				inputString = inputString.slice(0, inputString.length - 1);
+				hashed = hash(inputString);
+				break;
+			case 'Enter':
+				break;
+			default:
+				inputString += e.key;
+				hashed = hash(inputString);
+		}
+
+		draw();
+	});
+
+	draw();
+
+	return `
+		${hash}
+	`;
+};
+
 export const canvasRenderCollection: ICanvasRenderCollection = {
 	singleton,
 	factory,
@@ -782,5 +741,6 @@ export const canvasRenderCollection: ICanvasRenderCollection = {
 	composite,
 	prototype,
 	bridge,
-	flyweight
+	flyweight,
+	hashFunction
 };
