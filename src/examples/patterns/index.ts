@@ -102,5 +102,23 @@ export const Examples: Examples = {
 		name: 'Hash Function',
 		icon: 'icon-park-outline:file-hash-one',
 		added: '04-08-2024'
+	},
+	bubbleSorting: {
+		id: 'bubbleSorting',
+		name: 'Bubble sorting',
+		icon: 'icons8:generic-sorting-2',
+		added: '04-10-2024'
+	},
+	insertionSorting: {
+		id: 'insertionSorting',
+		name: 'Insertion sorting',
+		icon: 'icons8:generic-sorting-2',
+		added: '04-15-2024'
+	},
+	bucketSorting: {
+		id: 'bucketSorting',
+		name: 'Bucket sorting',
+		icon: 'icons8:generic-sorting-2',
+		added: '04-15-2024'
 	}
 };

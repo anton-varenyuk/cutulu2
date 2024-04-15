@@ -2,7 +2,7 @@
 	import { DashboardItem } from './dasboard-item';
 	import { dashboard } from './style';
 	import { navigateTo } from '../../utils/navigation';
-	import { Examples } from '../../patterns';
+	import { Examples } from '../../examples/patterns';
 
 	const ExampleValues = Object.values(Examples);
 

@@ -1,15 +1,27 @@
 // TODO: move types somewhere
 
-import { client, Creator, Dude1, Dude2, DudeCreator1, DudeCreator2 } from '../patterns/factory';
-import { client as abstract, CatFactory, DogFactory, Cat } from '../patterns/abstract-factory';
-import { Singleton } from '../patterns/singleton';
+import {
+	client,
+	Creator,
+	Dude1,
+	Dude2,
+	DudeCreator1,
+	DudeCreator2
+} from '../examples/patterns/factory';
+import {
+	client as abstract,
+	CatFactory,
+	DogFactory,
+	Cat
+} from '../examples/patterns/abstract-factory';
+import { Singleton } from '../examples/patterns/singleton';
 import {
 	client as builderClient,
 	Director,
 	AbominationBuilder,
 	abom1,
 	abom2
-} from '../patterns/builder';
+} from '../examples/patterns/builder';
 import {
 	dev,
 	juniorDev,
@@ -18,31 +30,37 @@ import {
 	client as decoratorClient,
 	Decorator,
 	DeveloperComponent
-} from '../patterns/decorator';
-import { DateFacade, DayOfMonth, MonthCalculator, DaysCalculator } from '../patterns/facade';
-import { Button, Mediator } from '../patterns/mediator';
-import { Publisher, Subscriber } from '../patterns/observable';
-import { Dog, Cat as VisitorCat, Visitor, Man } from '../patterns/visitor';
-import { ButtonHandler, WindowHandler } from '../patterns/chain-of-responsibility';
-import { RealSubject, SubjectProxy } from '../patterns/proxy';
-import { curry } from './other/currying';
+} from '../examples/patterns/decorator';
+import {
+	DateFacade,
+	DayOfMonth,
+	MonthCalculator,
+	DaysCalculator
+} from '../examples/patterns/facade';
+import { Button, Mediator } from '../examples/patterns/mediator';
+import { Publisher, Subscriber } from '../examples/patterns/observable';
+import { Dog, Cat as VisitorCat, Visitor, Man } from '../examples/patterns/visitor';
+import { ButtonHandler, WindowHandler } from '../examples/patterns/chain-of-responsibility';
+import { RealSubject, SubjectProxy } from '../examples/patterns/proxy';
+import { curry } from '../examples/other/currying';
 import {
 	Component as CompositeComponent,
 	Node as CompositeNode,
 	Detail as CompositeDetail,
 	Calculator as CompositeCalculator
-} from '../patterns/composite';
-import { Prototype } from '../patterns/prototype';
+} from '../examples/patterns/composite';
+import { Prototype } from '../examples/patterns/prototype';
 import {
 	Abstraction,
 	WindowsImplementor,
 	Client as BridgeClient,
 	LinuxImplementor,
 	MacOSImplementor
-} from '../patterns/bridge';
-import { Flyweight, FlyWeightFactory } from '../patterns/flyweight';
-import type { CharProps } from '../patterns/flyweight';
-import { hash } from './other/hash';
+} from '../examples/patterns/bridge';
+import { Flyweight, FlyWeightFactory } from '../examples/patterns/flyweight';
+import type { CharProps } from '../examples/patterns/flyweight';
+import { hash } from '../examples/other/hash';
+import { bubbleSort, bucketSort, insertionSort } from '../examples/other/sorting';
 
 export interface IExample {
 	id: number;
@@ -725,6 +743,60 @@ const hashFunction = (ctx: CanvasRenderingContext2D) => {
 	`;
 };
 
+const sorting = (ctx: CanvasRenderingContext2D, sortFunc: (arr: number[]) => number[]) => {
+	const numbers: number[] = [];
+
+	const draw = () => {
+		ctx.clearRect(0, 0, 600, 600);
+
+		// Input
+		ctx.fillStyle = '#fefefe';
+		ctx.font = '16px sans-serif';
+		ctx.fillText('Numbers', 50, 50);
+		const numbersString = numbers.join(', ');
+		ctx.fillText(numbersString || 'Enter some numbers', 50, 100);
+
+		// Sorted
+		ctx.fillText('Sorted array', 50, 200);
+		const sortedString = sortFunc(numbers).join(', ');
+		ctx.fillText(sortedString, 50, 250);
+	};
+
+	document?.addEventListener('keydown', (e) => {
+		switch (e.key) {
+			case 'Backspace':
+				numbers.pop();
+				break;
+			case 'Enter':
+				break;
+			default:
+				if (!isNaN(Number(e.key))) {
+					numbers.push(Number(e.key));
+				}
+		}
+
+		draw();
+	});
+
+	draw();
+
+	return `
+		${sortFunc}
+	`;
+};
+
+const bubbleSorting = (ctx: CanvasRenderingContext2D) => {
+	return sorting(ctx, bubbleSort);
+};
+
+const insertionSorting = (ctx: CanvasRenderingContext2D) => {
+	return sorting(ctx, insertionSort);
+};
+
+const bucketSorting = (ctx: CanvasRenderingContext2D) => {
+	return sorting(ctx, bucketSort);
+};
+
 export const canvasRenderCollection: ICanvasRenderCollection = {
 	singleton,
 	factory,
@@ -742,5 +814,8 @@ export const canvasRenderCollection: ICanvasRenderCollection = {
 	prototype,
 	bridge,
 	flyweight,
-	hashFunction
+	hashFunction,
+	bubbleSorting,
+	insertionSorting,
+	bucketSorting
 };

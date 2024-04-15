@@ -33,5 +33,11 @@
 	"singleton": "Singleton",
 	"singleton_disclaimer": "Singleton is a creational design pattern that lets you ensure that a class has only one instance, while providing a global access point to this instance.",
 	"hashFunction": "Hash Function",
-	"hashFunction_disclaimer": "A hash function is any function that can be used to map data of arbitrary size to fixed-size values, though there are some hash functions that support variable length output."
+	"hashFunction_disclaimer": "A hash function is any function that can be used to map data of arbitrary size to fixed-size values, though there are some hash functions that support variable length output.",
+	"bubbleSorting": "Bubble sort",
+	"bubbleSorting_disclaimer": "Bubble sort, sometimes referred to as sinking sort, is a simple sorting algorithm that repeatedly steps through the list to be sorted, compares each pair of adjacent items and swaps them if they are in the wrong order (ascending or descending arrangement). The pass through the list is repeated until no swaps are needed, which indicates that the list is sorted.",
+	"insertionSorting": "Insertion sort",
+	"insertionSorting_disclaimer": "Insertion sort is a simple sorting algorithm that builds the final sorted array (or list) one item at a time. It is much less efficient on large lists than more advanced algorithms such as quicksort, heapsort, or merge sort.",
+	"bucketSorting": "Bucket sort",
+	"bucketSorting_disclaimer": "Bucket sort, or bin sort, is a sorting algorithm that works by distributing the elements of an array into a number of buckets. Each bucket is then sorted individually, either using a different sorting algorithm, or by recursively applying the bucket sorting algorithm."
 }
