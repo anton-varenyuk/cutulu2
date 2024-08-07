@@ -60,7 +60,7 @@ import {
 import { Flyweight, FlyWeightFactory } from '../examples/patterns/flyweight';
 import type { CharProps } from '../examples/patterns/flyweight';
 import { hash } from '../examples/other/hash';
-import { bubbleSort, bucketSort, insertionSort } from '../examples/other/sorting';
+import { bubbleSort, bucketSort, insertionSort, selectionSort } from '../examples/other/sorting';
 
 export interface IExample {
 	id: number;
@@ -220,7 +220,7 @@ const mediator = (ctx: CanvasRenderingContext2D) => {
 	drawButtons();
 
 	const canvas = document.getElementById('canvas');
-	canvas.addEventListener('click', (e) => {
+	canvas?.addEventListener('click', (e) => {
 		const target = e.target as Element;
 		const canvasRect = target.getBoundingClientRect();
 
@@ -324,7 +324,7 @@ const chainOfResponsibility = (ctx: CanvasRenderingContext2D) => {
 	button.setSuccessor(window);
 
 	const canvas = document.getElementById('canvas');
-	canvas.addEventListener('click', (e) => {
+	canvas?.addEventListener('click', (e) => {
 		const target = e.target as Element;
 		const canvasRect = target.getBoundingClientRect();
 
@@ -394,7 +394,7 @@ const proxy = (ctx: CanvasRenderingContext2D) => {
 };
 
 const currying = (ctx: CanvasRenderingContext2D) => {
-	const uncurried = (a, b, c) => {
+	const uncurried = (a: any, b: any, c: any) => {
 		return a + b + c;
 	};
 
@@ -520,7 +520,7 @@ const prototype = (ctx: CanvasRenderingContext2D) => {
 		});
 	};
 
-	canvas.addEventListener('click', (e) => {
+	canvas?.addEventListener('click', (e) => {
 		const target = e.target as Element;
 		const canvasRect = target.getBoundingClientRect();
 
@@ -566,7 +566,7 @@ const bridge = (ctx: CanvasRenderingContext2D) => {
 		clientCode.changeImplementation(implementations[currentImplementationIndex]);
 	};
 
-	canvas.addEventListener('click', (e) => {
+	canvas?.addEventListener('click', (e) => {
 		const target = e.target as Element;
 		const canvasRect = target.getBoundingClientRect();
 
@@ -652,7 +652,7 @@ const flyweight = (ctx: CanvasRenderingContext2D) => {
 		});
 	};
 
-	canvas.addEventListener('click', (e) => {
+	canvas?.addEventListener('click', (e) => {
 		const target = e.target as Element;
 		const canvasRect = target.getBoundingClientRect();
 
@@ -797,6 +797,10 @@ const bucketSorting = (ctx: CanvasRenderingContext2D) => {
 	return sorting(ctx, bucketSort);
 };
 
+const selectionSorting = (ctx: CanvasRenderingContext2D) => {
+	return sorting(ctx, selectionSort);
+};
+
 export const canvasRenderCollection: ICanvasRenderCollection = {
 	singleton,
 	factory,
@@ -817,5 +821,6 @@ export const canvasRenderCollection: ICanvasRenderCollection = {
 	hashFunction,
 	bubbleSorting,
 	insertionSorting,
-	bucketSorting
+	bucketSorting,
+	selectionSorting
 };

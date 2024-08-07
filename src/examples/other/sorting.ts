@@ -12,7 +12,6 @@ export function bubbleSort(arr: number[]) {
 			}
 		}
 	}
-	const end = performance.now();
 
 	return a;
 }
@@ -67,4 +66,23 @@ export function bucketSort(arr: number[], bucketSize = 5) {
 	}
 
 	return sortedArray;
+}
+
+export function selectionSort(arr: number[]) {
+	const a = [...arr];
+
+	for (let i = 0; i < a.length - 1; i++) {
+		let minIndex = i;
+		// Find the index of the minimum element in the unsorted part of the array
+		for (let j = i + 1; j < a.length; j++) {
+			if (arr[j] < arr[minIndex]) {
+				minIndex = j;
+			}
+		}
+		// Swap the minimum element with the first element of the unsorted part
+		if (minIndex !== i) {
+			[arr[i], arr[minIndex]] = [arr[minIndex], arr[i]];
+		}
+	}
+	return a;
 }
