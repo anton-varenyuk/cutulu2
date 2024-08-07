@@ -61,6 +61,12 @@ import { Flyweight, FlyWeightFactory } from '../examples/patterns/flyweight';
 import type { CharProps } from '../examples/patterns/flyweight';
 import { hash } from '../examples/other/hash';
 import { bubbleSort, bucketSort, insertionSort, selectionSort } from '../examples/other/sorting';
+import {
+	CarStore,
+	MotoStore,
+	client as storeClient,
+	Store
+} from '../examples/patterns/template-method';
 
 export interface IExample {
 	id: number;
@@ -743,6 +749,32 @@ const hashFunction = (ctx: CanvasRenderingContext2D) => {
 	`;
 };
 
+const templateMethod = (ctx: CanvasRenderingContext2D) => {
+	const carStore = new CarStore();
+	const motoStore = new MotoStore();
+	const announceCar = () => storeClient(carStore);
+	const announceMoto = () => storeClient(motoStore);
+
+	// const canvas = document.getElementById('canvas');
+
+	const drawUI = () => {
+		ctx.clearRect(0, 0, 600, 600);
+
+		ctx.fillStyle = '#fefefe';
+		ctx.font = '16px sans-serif';
+		ctx.fillText(announceCar(), 70, 70);
+		ctx.fillText(announceMoto(), 70, 150);
+	};
+
+	drawUI();
+
+	return `
+		${Store}
+		${CarStore}
+		${MotoStore}
+	`;
+};
+
 const sorting = (ctx: CanvasRenderingContext2D, sortFunc: (arr: number[]) => number[]) => {
 	const numbers: number[] = [];
 
@@ -822,5 +854,6 @@ export const canvasRenderCollection: ICanvasRenderCollection = {
 	bubbleSorting,
 	insertionSorting,
 	bucketSorting,
-	selectionSorting
+	selectionSorting,
+	templateMethod
 };
