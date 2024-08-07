@@ -103,6 +103,12 @@ export const Examples: Examples = {
 		icon: 'icon-park-outline:file-hash-one',
 		added: '04-08-2024'
 	},
+	templateMethod: {
+		id: 'templateMethod',
+		name: 'Template method',
+		icon: 'tabler:template',
+		added: '08-07-2024'
+	},
 	bubbleSorting: {
 		id: 'bubbleSorting',
 		name: 'Bubble sorting',
