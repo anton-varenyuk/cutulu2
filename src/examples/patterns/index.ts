@@ -120,5 +120,11 @@ export const Examples: Examples = {
 		name: 'Bucket sorting',
 		icon: 'icons8:generic-sorting-2',
 		added: '04-15-2024'
+	},
+	selectionSorting: {
+		id: 'selectionSorting',
+		name: 'Selection sorting',
+		icon: 'icons8:generic-sorting-2',
+		added: '04-16-2024'
 	}
 };
