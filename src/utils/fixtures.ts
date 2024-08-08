@@ -67,6 +67,11 @@ import {
 	client as storeClient,
 	Store
 } from '../examples/patterns/template-method';
+import {
+	ConcreteReverseStrategy,
+	ConcreteSortStrategy,
+	Context
+} from '../examples/patterns/strategy';
 
 export interface IExample {
 	id: number;
@@ -755,8 +760,6 @@ const templateMethod = (ctx: CanvasRenderingContext2D) => {
 	const announceCar = () => storeClient(carStore);
 	const announceMoto = () => storeClient(motoStore);
 
-	// const canvas = document.getElementById('canvas');
-
 	const drawUI = () => {
 		ctx.clearRect(0, 0, 600, 600);
 
@@ -772,6 +775,31 @@ const templateMethod = (ctx: CanvasRenderingContext2D) => {
 		${Store}
 		${CarStore}
 		${MotoStore}
+	`;
+};
+
+const strategy = (ctx: CanvasRenderingContext2D) => {
+	const context = new Context(new ConcreteSortStrategy());
+	const sortingResult = context.doLogic();
+	context.setStrategy(new ConcreteReverseStrategy());
+	const reverseResult = context.doLogic();
+
+	const drawUI = () => {
+		ctx.clearRect(0, 0, 600, 600);
+		ctx.fillStyle = '#fefefe';
+		ctx.font = '16px sans-serif';
+		ctx.fillText('Context doing sorting strategy:', 50, 50);
+		ctx.fillText(sortingResult.join(','), 50, 100);
+
+		ctx.fillText('Context doing reverse strategy:', 50, 200);
+		ctx.fillText(reverseResult.join(','), 50, 250);
+	};
+
+	drawUI();
+
+	return `
+		${Context}
+		${ConcreteSortStrategy}
 	`;
 };
 
@@ -855,5 +883,6 @@ export const canvasRenderCollection: ICanvasRenderCollection = {
 	insertionSorting,
 	bucketSorting,
 	selectionSorting,
-	templateMethod
+	templateMethod,
+	strategy
 };
