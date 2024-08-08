@@ -109,6 +109,12 @@ export const Examples: Examples = {
 		icon: 'tabler:template',
 		added: '08-07-2024'
 	},
+	strategy: {
+		id: 'strategy',
+		name: 'Strategy',
+		icon: 'carbon:strategy-play',
+		added: '08-07-2024'
+	},
 	bubbleSorting: {
 		id: 'bubbleSorting',
 		name: 'Bubble sorting',
