@@ -72,6 +72,7 @@ import {
 	ConcreteSortStrategy,
 	Context
 } from '../examples/patterns/strategy';
+import { Invoker, Receiver, SaveCommand, SuccessAlertCommand } from '../examples/patterns/command';
 
 export interface IExample {
 	id: number;
@@ -803,6 +804,54 @@ const strategy = (ctx: CanvasRenderingContext2D) => {
 	`;
 };
 
+const command = (ctx: CanvasRenderingContext2D) => {
+	const canvas = document.getElementById('canvas');
+	const invoker = new Invoker();
+	const receiver = new Receiver();
+
+	const drawUI = () => {
+		ctx.clearRect(0, 0, 600, 600);
+		ctx.fillStyle = '#fefefe';
+		ctx.font = '16px sans-serif';
+
+		// Button
+		ctx.fillRect(50, 50, 100, 50);
+		ctx.fillStyle = '#353535';
+		ctx.font = `28px sans-serif`;
+		ctx.fillText('Save', 65, 85, 50);
+	};
+
+	canvas?.addEventListener('click', (e) => {
+		const target = e.target as Element;
+		const canvasRect = target.getBoundingClientRect();
+
+		const clickCanvasX = e.pageX - canvasRect.left;
+		const clickCanvasY = e.pageY - canvasRect.top;
+
+		// Bold btn click
+		if (
+			clickCanvasX >= 50 &&
+			clickCanvasX <= 50 + 100 &&
+			clickCanvasY >= 50 &&
+			clickCanvasY <= 50 + 50
+		) {
+			invoker.setOnStart(new SaveCommand(receiver));
+			invoker.setOnFinish(new SuccessAlertCommand('successfully saved!'));
+			const results = invoker.saveFile();
+
+			ctx.fillStyle = '#fefefe';
+			ctx.fillText(results.start || '', 50, 200);
+			ctx.fillText(results.finish || '', 50, 230);
+		}
+	});
+
+	drawUI();
+
+	return `
+		${Invoker}
+	`;
+};
+
 const sorting = (ctx: CanvasRenderingContext2D, sortFunc: (arr: number[]) => number[]) => {
 	const numbers: number[] = [];
 
@@ -884,5 +933,6 @@ export const canvasRenderCollection: ICanvasRenderCollection = {
 	bucketSorting,
 	selectionSorting,
 	templateMethod,
-	strategy
+	strategy,
+	command
 };
