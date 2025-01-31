@@ -43,5 +43,7 @@
 	"templateMethod": "Template method",
 	"templateMethod_disclaimer": "The Template Method pattern is a behavioral design pattern that defines the skeleton of an algorithm in a base class but lets subclasses override specific steps of the algorithm without changing its structure.",
 	"strategy": "Strategy",
-	"strategy_disclaimer": "Strategy is a behavioral design pattern that turns a set of behaviors into objects and makes them interchangeable inside original context object."
+	"strategy_disclaimer": "Strategy is a behavioral design pattern that turns a set of behaviors into objects and makes them interchangeable inside original context object.",
+	"command": "Command",
+	"command_disclaimer": "Command is behavioral design pattern that converts requests or simple operations into objects."
 }

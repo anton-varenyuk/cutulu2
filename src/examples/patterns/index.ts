@@ -115,6 +115,12 @@ export const Examples: Examples = {
 		icon: 'carbon:strategy-play',
 		added: '08-07-2024'
 	},
+	command: {
+		id: 'command',
+		name: 'Command',
+		icon: 'octicon:command-palette-16',
+		added: '01-31-2025'
+	},
 	bubbleSorting: {
 		id: 'bubbleSorting',
 		name: 'Bubble sorting',
